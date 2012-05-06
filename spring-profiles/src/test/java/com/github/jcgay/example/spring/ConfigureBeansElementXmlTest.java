@@ -3,13 +3,12 @@ package com.github.jcgay.example.spring;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.fail;
 
-public class ConfigureRootElementXmlTest {
+public class ConfigureBeansElementXmlTest {
 
     private GenericXmlApplicationContext context;
 
@@ -19,9 +18,9 @@ public class ConfigureRootElementXmlTest {
     }
 
     @Test
-    public void context_should_contains_only_bean_a_when_profile_a_is_activated() {
+    public void context_should_contains_only_bean_a_when_no_profile_is_activated() {
 
-        setProfile("a");
+        loadContext();
 
         assertNotNull(context.getBean(BeanA.class));
 
@@ -34,25 +33,17 @@ public class ConfigureRootElementXmlTest {
     }
 
     @Test
-    public void context_should_contains_only_bean_b_when_profile_b_is_activated() {
+    public void context_should_contains_bean_a_and_bean_b_when_profile_b_is_activated() {
 
-        setProfile("b");
+        context.getEnvironment().setActiveProfiles("b");
+        loadContext();
 
+        assertNotNull(context.getBean(BeanA.class));
         assertNotNull(context.getBean(BeanB.class));
-
-        try {
-            context.getBean(BeanA.class);
-            fail("BeanA should not be registered since it's only defined in profile a.");
-        } catch (NoSuchBeanDefinitionException e) {
-            // looks good !
-        }
     }
 
-    private void setProfile(String profile) {
-        context.getEnvironment().setActiveProfiles(profile);
-        context.load("classpath:/com/github/jcgay/example/spring/ConfigureRootElementXmlTest-a.xml");
-        context.load("classpath:/com/github/jcgay/example/spring/ConfigureRootElementXmlTest-b.xml");
+    private void loadContext() {
+        context.load("classpath:/com/github/jcgay/example/spring/ConfigureBeansElementXmlTest.xml");
         context.refresh();
     }
-
 }
