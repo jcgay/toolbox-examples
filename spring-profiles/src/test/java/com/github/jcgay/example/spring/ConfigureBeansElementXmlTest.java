@@ -1,12 +1,10 @@
 package com.github.jcgay.example.spring;
 
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.fail;
+import static com.github.jcgay.example.matcher.ApplicationContextAssert.assertThat;
 
 public class ConfigureBeansElementXmlTest {
 
@@ -22,14 +20,8 @@ public class ConfigureBeansElementXmlTest {
 
         loadContext();
 
-        assertNotNull(context.getBean(BeanA.class));
-
-        try {
-            context.getBean(BeanB.class);
-            fail("BeanB should not be registered since it's only defined in profile b.");
-        } catch (NoSuchBeanDefinitionException e) {
-            // looks good !
-        }
+        assertThat(context).containsBean(BeanA.class)
+                           .notContainsBean(BeanB.class);
     }
 
     @Test
@@ -38,8 +30,8 @@ public class ConfigureBeansElementXmlTest {
         context.getEnvironment().setActiveProfiles("b");
         loadContext();
 
-        assertNotNull(context.getBean(BeanA.class));
-        assertNotNull(context.getBean(BeanB.class));
+        assertThat(context).containsBean(BeanA.class)
+                           .containsBean(BeanB.class);
     }
 
     private void loadContext() {

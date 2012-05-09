@@ -2,14 +2,11 @@ package com.github.jcgay.example.spring;
 
 import com.github.jcgay.example.spring.configuration.Generic;
 import com.github.jcgay.example.spring.configuration.MultipleProfiles;
-import com.github.jcgay.example.spring.configuration.ProfileA;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.fail;
+import static com.github.jcgay.example.matcher.ApplicationContextAssert.assertThat;
 
 public class ConfigureMultipleProfileOnConfigurationAnnotationTest {
 
@@ -26,14 +23,8 @@ public class ConfigureMultipleProfileOnConfigurationAnnotationTest {
         context.register(Generic.class, MultipleProfiles.class);
         context.refresh();
 
-        assertNotNull(context.getBean(BeanD.class));
-
-        try {
-            context.getBean(BeanA.class);
-            fail("BeanA should not be registered since it's only defined in profile a.");
-        } catch (NoSuchBeanDefinitionException e) {
-            // looks good !
-        }
+        assertThat(context).containsBean(BeanD.class)
+                           .notContainsBean(BeanA.class);
     }
 
     @Test
@@ -43,8 +34,8 @@ public class ConfigureMultipleProfileOnConfigurationAnnotationTest {
         context.register(Generic.class, MultipleProfiles.class);
         context.refresh();
 
-        assertNotNull(context.getBean(BeanA.class));
-        assertNotNull(context.getBean(BeanB.class));
-        assertNotNull(context.getBean(BeanD.class));
+        assertThat(context).containsBean(BeanA.class)
+                           .containsBean(BeanB.class)
+                           .containsBean(BeanD.class);
     }
 }

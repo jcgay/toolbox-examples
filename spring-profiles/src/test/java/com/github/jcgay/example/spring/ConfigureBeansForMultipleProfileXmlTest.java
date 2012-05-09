@@ -1,12 +1,10 @@
 package com.github.jcgay.example.spring;
 
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.fail;
+import static com.github.jcgay.example.matcher.ApplicationContextAssert.assertThat;
 
 public class ConfigureBeansForMultipleProfileXmlTest {
 
@@ -22,33 +20,10 @@ public class ConfigureBeansForMultipleProfileXmlTest {
 
         loadContext();
 
-        try {
-            context.getBean(BeanA.class);
-            fail("BeanA should not be registered since it's only defined in profile a.");
-        } catch (NoSuchBeanDefinitionException e) {
-            // looks good !
-        }
-
-        try {
-            context.getBean(BeanB.class);
-            fail("BeanB should not be registered since it's only defined in profile b.");
-        } catch (NoSuchBeanDefinitionException e) {
-            // looks good !
-        }
-
-        try {
-            context.getBean(BeanC.class);
-            fail("BeanC should not be registered since it's only defined in profile a.");
-        } catch (NoSuchBeanDefinitionException e) {
-            // looks good !
-        }
-
-        try {
-            context.getBean(BeanD.class);
-            fail("BeanD should not be registered since it's only defined in profile b.");
-        } catch (NoSuchBeanDefinitionException e) {
-            // looks good !
-        }
+        assertThat(context).notContainsBean(BeanA.class)
+                           .notContainsBean(BeanB.class)
+                           .notContainsBean(BeanC.class)
+                           .notContainsBean(BeanD.class);
     }
 
     @Test
@@ -57,16 +32,10 @@ public class ConfigureBeansForMultipleProfileXmlTest {
         context.getEnvironment().setActiveProfiles("a");
         loadContext();
 
-        assertNotNull(context.getBean(BeanA.class));
-        assertNotNull(context.getBean(BeanB.class));
-        assertNotNull(context.getBean(BeanC.class));
-
-        try {
-            context.getBean(BeanD.class);
-            fail("BeanD should not be registered since it's only defined in profile b.");
-        } catch (NoSuchBeanDefinitionException e) {
-            // looks good !
-        }
+        assertThat(context).containsBean(BeanA.class)
+                           .containsBean(BeanB.class)
+                           .containsBean(BeanC.class)
+                           .notContainsBean(BeanD.class);
     }
 
     @Test
@@ -75,16 +44,10 @@ public class ConfigureBeansForMultipleProfileXmlTest {
         context.getEnvironment().setActiveProfiles("b");
         loadContext();
 
-        assertNotNull(context.getBean(BeanA.class));
-        assertNotNull(context.getBean(BeanB.class));
-        assertNotNull(context.getBean(BeanD.class));
-
-        try {
-            context.getBean(BeanC.class);
-            fail("BeanC should not be registered since it's only defined in profile a.");
-        } catch (NoSuchBeanDefinitionException e) {
-            // looks good !
-        }
+        assertThat(context).containsBean(BeanA.class)
+                           .containsBean(BeanB.class)
+                           .notContainsBean(BeanC.class)
+                           .containsBean(BeanD.class);
     }
 
     @Test
@@ -93,10 +56,10 @@ public class ConfigureBeansForMultipleProfileXmlTest {
         context.getEnvironment().setActiveProfiles("a", "b");
         loadContext();
 
-        assertNotNull(context.getBean(BeanA.class));
-        assertNotNull(context.getBean(BeanB.class));
-        assertNotNull(context.getBean(BeanC.class));
-        assertNotNull(context.getBean(BeanD.class));
+        assertThat(context).containsBean(BeanA.class)
+                           .containsBean(BeanB.class)
+                           .containsBean(BeanC.class)
+                           .containsBean(BeanD.class);
     }
 
     private void loadContext() {
