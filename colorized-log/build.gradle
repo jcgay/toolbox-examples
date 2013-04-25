@@ -1,0 +1,7 @@
+apply plugin: 'java'
+
+group = 'com.github.jcgay.example.log'
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.5'
+}
