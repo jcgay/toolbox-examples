@@ -1,0 +1,7 @@
+
+dependencies {
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.5'
+	runtime group: 'ch.qos.logback', name: 'logback-classic', version: '1.0.12'
+}
+
+mainClassName = "com.github.jcgay.example.log.logback.Main"
