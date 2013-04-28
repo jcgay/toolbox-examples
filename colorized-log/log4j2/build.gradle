@@ -1,0 +1,6 @@
+
+dependencies {
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.0-beta5'
+}
+
+mainClassName = "com.github.jcgay.example.log.log4j2.Main"
