@@ -1,1 +1,1 @@
-include 'logback', 'log4j2'
+include 'logback', 'log4j2', 'log4j'
