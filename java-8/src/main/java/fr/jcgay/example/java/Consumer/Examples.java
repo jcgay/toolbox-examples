@@ -1,4 +1,4 @@
-package fr.jcgay.example.java.Consumer;
+package fr.jcgay.example.java.consumer;
 
 import java.util.function.Consumer;
 
