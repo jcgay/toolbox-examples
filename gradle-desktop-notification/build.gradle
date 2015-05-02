@@ -1,1 +1,17 @@
 apply plugin: 'build-announcements'
+
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath group: 'fr.jcgay', name: 'gradle-notifier', version: '0.1-SNAPSHOT'
+    }
+}
+apply plugin: 'fr.jcgay.gradle-notifier'
+
+
+
+
