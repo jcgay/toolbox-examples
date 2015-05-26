@@ -7,11 +7,13 @@ buildscript {
     }
 
     dependencies {
-        classpath group: 'fr.jcgay', name: 'gradle-notifier', version: '0.1-SNAPSHOT'
+        classpath group: 'fr.jcgay', name: 'gradle-notifier', version: '0.2-SNAPSHOT'
     }
 }
-apply plugin: 'fr.jcgay.gradle-notifier'
+//apply plugin: 'fr.jcgay.gradle-notifier'
 
-
+//notifier {
+//    implementation = 'anybar'
+//}
 
 
