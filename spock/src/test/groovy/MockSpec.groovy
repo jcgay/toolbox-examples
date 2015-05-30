@@ -40,4 +40,15 @@ class MockSpec extends Specification {
 
         captured == "Build success !"
     }
+
+    def "should send notification when build succeed (in order)"() {
+        when:
+        listener.onSuccess(new BuildResult())
+
+        then:
+        1 * notifier.isReady() >> true
+
+        then:
+        1 * notifier.send("Build success !")
+    }
 }
