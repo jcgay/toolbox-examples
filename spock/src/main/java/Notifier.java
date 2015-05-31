@@ -6,4 +6,8 @@ public class Notifier {
     public boolean isReady() {
         return true;
     }
+
+    public boolean checkCompatibility(String os) {
+        return true;
+    }
 }

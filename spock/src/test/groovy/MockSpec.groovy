@@ -51,4 +51,15 @@ class MockSpec extends Specification {
         then:
         1 * notifier.send("Build success !")
     }
+
+    def "should check notifier compatibility with os when creating listener"() {
+        given:
+        notifier.checkCompatibility(_) >> { String os -> !os.startsWith("win") }
+
+        when:
+        new BuildListener(notifier)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
 }
