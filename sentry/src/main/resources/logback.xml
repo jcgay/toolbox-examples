@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="Sentry" class="com.getsentry.raven.logback.SentryAppender">
+        <dsn>dsn</dsn>
+        <ravenFactory>fr.jcgay.github.sentry.MyAppRavenFactory</ravenFactory>
+        <release>1.0-SNAPSHOT</release>
+        <extraTag>Environment</extraTag>
+    </appender>
+    <root level="warn">
+        <appender-ref ref="Sentry"/>
+    </root>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="Sentry"/>
+    </root>
+</configuration>
