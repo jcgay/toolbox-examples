@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.github.jcgay.example.version</groupId>
         <artifactId>parent-pom</artifactId>
-        <version>${my-version}</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>submodule-2</artifactId>

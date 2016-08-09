@@ -4,11 +4,11 @@
 
     <groupId>com.github.jcgay.example.version</groupId>
     <artifactId>parent-pom</artifactId>
-    <version>${my-version}</version>
+    <version>${revision}</version>
     <packaging>pom</packaging>
 
     <properties>
-        <my-version>1.0-SNAPSHOT</my-version>
+        <revision>1.0-SNAPSHOT</revision>
     </properties>
 
     <modules>
