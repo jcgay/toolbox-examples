@@ -1,3 +1,5 @@
+import java.util.concurrent.TimeUnit
+
 apply plugin: 'build-announcements'
 
 buildscript {
@@ -7,13 +9,19 @@ buildscript {
     }
 
     dependencies {
-        classpath group: 'fr.jcgay', name: 'gradle-notifier', version: '0.2-SNAPSHOT'
+        classpath group: 'fr.jcgay', name: 'gradle-notifier', version: '3.0.1-SNAPSHOT'
     }
 }
-//apply plugin: 'fr.jcgay.gradle-notifier'
 
-//notifier {
-//    implementation = 'anybar'
-//}
+apply plugin: 'fr.jcgay.gradle-notifier'
+
+notifier {
+    implementation = 'anybar'
+
+    timeout {
+        time = 1
+        unit = TimeUnit.SECONDS
+    }
+}
 
 
