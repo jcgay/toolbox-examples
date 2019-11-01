@@ -4,3 +4,26 @@
  * This is a general purpose Gradle build.
  * Learn how to create Gradle builds at https://guides.gradle.org/creating-new-gradle-builds
  */
+
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("fr.jcgay:gradle-notifier:3.0.1-SNAPSHOT")
+    }
+}
+
+plugins {
+    id("fr.jcgay.gradle-notifier") version "3.0.0"
+}
+
+notifier {
+    implementation = "anybar"
+
+    timeout {
+        time = 1
+        unit = TimeUnit.SECONDS
+    }
+}
